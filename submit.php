@@ -1,29 +1,29 @@
 <?php
-include('dbconnector.php');
 session_start();
-$conn = mysqli_connect("localhost","root","", "testdb") or die("connection failed");
 $email = $_SESSION['email'];
-if (isset($email)) {
+$conn = mysqli_connect("localhost", "root", "", "testdb") or die("connection failed");
     $score=0;
     $status = 1;
     $correctAns = array('3', '4', '1', '2', '3');
     $ans = array();
     $msg = "";
-    
+    echo "session ";
     if (isset($_POST['submit'])) {
 
-        
+        echo "post ";
+
         for ($i = 0; $i < 5; $i++) {
-            $key  =  'question'.($i+1);
+            $key  =  'question' . ($i + 1);
             $ans[$i] = $_POST[$key];
 
-       ///     echo $_POST[$key];
-    
+            echo $_POST[$key];
+
             if ($ans[$i] == $correctAns[$i]) {
                 $score++;
             }
         }
-          
+
+
 
         if ($score < 1) {
             $msg = '<p class="text-danger">You have failed, study more <i class="fa-solid fa-face-angry text-danger"></i></p>';
@@ -36,16 +36,14 @@ if (isset($email)) {
         }
 
 
-        $sql = "update INTO `quiz`(`score`, `status`) VALUES ($score,$status) where email = '{$email}'";
+        $sql = "insert INTO `quiz`(`email`,`score`, `status`) VALUES ('$email',$score,$status)";
 
         if (mysqli_query($conn, $sql)) {
             echo "added";
         } else {
             echo "not added";
         }
-
-
-    }
+    
 }
 
 ?>
@@ -82,7 +80,7 @@ if (isset($email)) {
         </header>
         <main>
             <div class="row">
-                <h5 class="col-4">  <?php echo isset($email) ?"hello " .$email:""  ?> </h5>
+                <h5 class="col-4"> <?php echo isset($email) ? "hello " . $email : ""  ?> </h5>
                 <div class="col-8"></div>
             </div>
             <div class="text-success">

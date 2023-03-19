@@ -3,7 +3,7 @@ session_start();
 $DB_servername = "localhost";
 $DB_username = "root";
 $DB_password = "";
-$DB_Name = "test";
+$DB_Name = "testdb";
 $connection = mysqli_connect($DB_servername, $DB_username, $DB_password, $DB_Name);
 if (!$connection) {
     die("Failed" . mysqli_connect_error());
@@ -11,6 +11,8 @@ if (!$connection) {
 if (isset($_POST['submit'])) {
 
     $email = $_POST['email'];
+
+    $_SESSION['email'] = $email;
 
 
     if (empty($_POST['email'])) {
@@ -26,7 +28,7 @@ if (isset($_POST['submit'])) {
     if ($count > 0) {
         $duplicate = "Email already exist and Already Examed  ";
     } else {
-        $_SESSION['email']=$v['email'];
+        // $_SESSION['email']=$v['email'];
         header('location:question.php');
     }
 }
