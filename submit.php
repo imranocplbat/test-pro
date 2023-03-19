@@ -1,8 +1,8 @@
 <?php
 include('dbconnector.php');
 session_start();
-$email = 'abid@gmail.com';
-//$_SESSION['email'];
+$conn = mysqli_connect("localhost","root","", "testdb") or die("connection failed");
+$email = $_SESSION['email'];
 if (isset($email)) {
     $score=0;
     $status = 1;
@@ -11,8 +11,7 @@ if (isset($email)) {
     $msg = "";
     
     if (isset($_POST['submit'])) {
-        
-        echo "post ";
+
         
         for ($i = 0; $i < 5; $i++) {
             $key  =  'question'.($i+1);
